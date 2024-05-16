@@ -1,9 +1,15 @@
 import { Logger, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { APP_GUARD } from '@nestjs/core'
 import { configValidationSchema } from 'config/schema.config'
 import { LoggerMiddleware } from 'middleware/logger.middleware'
 
+import { AuthModule } from './auth/auth.module'
+import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { DatabaseModule } from './database/database.module'
+import { PermissionsGuard } from './permissions/guards/permission.guard'
+import { PermissionsModule } from './permissions/permissions.module'
+import { RolesModule } from './roles/roles.module'
 import { UsersModule } from './users/users.module'
 
 @Module({
@@ -13,11 +19,25 @@ import { UsersModule } from './users/users.module'
       envFilePath: [`.env.${process.env.STAGE}`],
       validationSchema: configValidationSchema,
     }),
-    DatabaseModule,
     UsersModule,
+    DatabaseModule,
+    AuthModule,
+    RolesModule,
+    PermissionsModule,
+/*    ProductsModul,
+    OrdersModule,*/
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: PermissionsGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
