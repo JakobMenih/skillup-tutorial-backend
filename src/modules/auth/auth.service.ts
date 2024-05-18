@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { hash } from 'bcrypt'
 import { Request, Response } from 'express'
 
 import { User } from '../../entities/user.entity'
@@ -17,7 +16,7 @@ import { PostgresErrorCode } from '../../helpers/postgresErrorCode.enum'
 import { CookieType, JwtType, TokenPayload } from '../../interfaces/auth.interface'
 import { UserData } from '../../interfaces/user.interface'
 import Logging from '../../library/Logging'
-import { compareHash } from '../../utils/bcrypt'
+import { compareHash, hash } from '../../utils/bcrypt'
 import { UsersService } from '../users/users.service'
 import { RegisterUserDto } from './dto/register-user.dto'
 

@@ -16,9 +16,11 @@ async function bootstrap() {
   })
   app.useGlobalPipes(new ValidationPipe())
   app.use(cookieParser())
+  // Setup to display files
   app.use('/files', express.static('files'))
   const PORT = process.env.PORT || 8080
   await app.listen(PORT)
-  Logging.info(`App is listening on: ${await app.getUrl()}`)
+
+  Logging.log(`App is listening on: ${await app.getUrl()}`)
 }
 bootstrap()
