@@ -1,11 +1,11 @@
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import Logging from 'library/Logging'
 
 import { AppModule } from './modules/app.module'
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger"
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

@@ -33,6 +33,10 @@ export class RolesController {
     @Body() createRoleDto: CreateUpdateRoleDto,
     @Body('permissions') permissionsIds: string[],
   ): Promise<Role> {
+    /*
+      [1, 2]
+      [{id:1},{id:2}]
+    */
     return this.rolesService.create(
       createRoleDto,
       permissionsIds.map((id) => ({
